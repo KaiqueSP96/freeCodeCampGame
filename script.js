@@ -19,6 +19,27 @@ const monsterStats = document.querySelector("#monsterStats");
 const monsterName = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 
+
+//Weapons:
+const weapons = [
+  {
+    name: "stick",
+    power: 5
+  },
+  {
+    name: "dagger",
+    power: 30
+  },
+  {
+    name: "claw hammer",
+    power: 50
+  },
+  {
+    name: "sword",
+    power: 100
+  }
+];
+
 //Locations / Scenarios:
 const locations = [
   {
@@ -34,7 +55,7 @@ const locations = [
     text: "You enter the store."
   },
   {
-    name:"cave",
+    name: "cave",
     "button text": ["Fight slime", "Fight fanged beast", "Go to town square"],
     "button functions": [fightSlime, fightBeast, goTown],
     text: "You enter the cave. You see some monsters."
@@ -56,7 +77,7 @@ function update(location) {
   button2.onclick = location["button functions"][1];
   button3.onclick = location["button functions"][2];
   text.innerText = location.text;
-} 
+}
 
 function goTown() {
   update(locations[0]);
@@ -80,11 +101,15 @@ function fightDragon() {
 }
 
 function buyHealth() {
-  gold -= 10;
-  health += 10;
-  goldText.innerText = gold;
-  healthText.innerText = health;
-  text.innerText = "Yeah! i feel me god!"
+  if (gold >= 10) {
+    gold -= 10;
+    health += 10;
+    goldText.innerText = gold;
+    healthText.innerText = health;
+    text.innerText = "Yeah! i feel me god!"
+  } else {
+    text.innerText = "You do not have enough gold to buy health!"
+  }
 }
 
 
