@@ -93,7 +93,16 @@ function goCave() {
 
 
 function buyWeapon() {
+  if (gold >= 30) {
+    gold -= 30;
+    currentWeapon++;
+    goldText.innerText = gold;
+    let newWeapon = weapons[currentWeapon].name;
+    text.innerText = "Succes!!! Now you have a " + newWeapon + ".";
+  }
 
+  //weapons[currentWeapon] = weapons[0] = {...stick}
+  //weapons[currentWeapon] = weapons[1] = {...dagger}
 }
 
 function fightDragon() {
