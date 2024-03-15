@@ -188,7 +188,13 @@ function attack() {
   text.innerText = "The " + monsters[fighting].name + " attacks."
   text.innerText += "You attack it with your " + weapons[currentWeapon].name + "."
   health -= getMonsterAttackValue(monsters[fighting].level);
-  monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1
+
+  if (isMonsterHit()) {
+    monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp)++
+  } else {
+    text.innerText += " You miss."
+  }
+
   healthText.innerText = health
   monsterHealthText.innerText = monsterHealth
   if (health <= 0) {
@@ -197,15 +203,25 @@ function attack() {
     defeatMonster();
     if (fighting === 2) {
       winGame()
+
     } else {
       defeatMonster()
     }
+  }
+
+  if (Math.random() <= .1 && inventory.length !== 1) {
+    text.innerText += "Your " + inventory.pop() + " breaks";
+    currentWeapon--;
   }
 };
 
 function getMonsterAttackValue(level) {
   const hit = (level * 5) - (Math.floor(Math.random() * xp));
   return hit > 0 ? hit : 0
+}
+
+function isMonsterHit() {
+  return Math.random() > .2 || health < 20;
 }
 
 function dodge() {
@@ -240,25 +256,30 @@ function restart() {
   goTown();
 }
 
+function easterEgg() {
+  update(locations[7])
+}
+
 function fightSlime() {
-  fighting = 0
+  fighting = 0;
   goFight()
 }
 
 function fightBeast() {
-  fighting = 1
-  goFight()
+  fighting = 1;
+  goFight();
 }
 
 function fightDragon() {
-  fighting = 2
-  goFight()
+  fighting = 2;
+  goFight();
 }
 
 function goFight() {
-  update(locations[3])
+  update(locations[3]);
   monsterHealth = monsters[fighting].health;
-  monsterStats.styles.display = 'block';
+  monsterStats.style.display = "block";
   monsterName.innerText = monsters[fighting].name;
   monsterHealthText.innerText = monsterHealth;
+
 }
